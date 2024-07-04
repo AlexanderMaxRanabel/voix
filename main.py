@@ -94,8 +94,8 @@ def runtime(filename):
                 case 'auto_note':
                     note = float(tokens[1])
                     duration = float(tokens[2])
-                    cosine_or_sine = float(tokens[4])
-                    sample_rate = float(tokens[5])
+                    cosine_or_sine = float(tokens[3])
+                    sample_rate = float(tokens[4])
                     audio = mk_note(note, duration, cosine_or_sine, sample_rate)
                     playable_flow.append(audio)
                 case 'play_flow':

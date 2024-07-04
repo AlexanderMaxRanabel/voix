@@ -2,4 +2,5 @@ sine 0.5 523.25 1 44100
 sine 0.5 261.63 1 44100
 cosine 0.5 300 1 8000 0
 cosine 0.5 100 1 44100 0
+auto_note E4
 play_flow
