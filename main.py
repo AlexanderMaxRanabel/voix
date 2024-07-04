@@ -39,6 +39,7 @@ def make_cosine(frequency, duration, sample_rate, amplitude, phase):
 
     return audio
 
+
 def mk_note(note, cosine_or_sine, duration, sample_rate):
     audio = None
 
@@ -60,6 +61,9 @@ def mk_note(note, cosine_or_sine, duration, sample_rate):
             audio = make_sine(note_frequencies[note], duration, sample_rate, 0.5)
         case _:
             print("Unknown Wave Type")
+
+    return audio
+
 
 def runtime(filename):
     playable_flow = []
@@ -93,7 +97,7 @@ def runtime(filename):
                     cosine_or_sine = float(tokens[4])
                     sample_rate = float(tokens[5])
                     audio = mk_note(note, duration, cosine_or_sine, sample_rate)
-
+                    playable_flow.append(audio)
                 case 'play_flow':
                     play_flow(playable_flow, sample_rate)
                 case _: print("Unknown Keyword")
