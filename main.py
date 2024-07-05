@@ -40,9 +40,7 @@ def make_cosine(frequency, duration, sample_rate, amplitude, phase):
     return audio
 
 
-def mk_note(note, cosine_or_sine, duration, sample_rate):
-    audio = None
-
+def mk_note(note, duration, sample_rate):
     note_frequencies = {
         'C4': 261.63,
         'D4': 293.66,
@@ -54,13 +52,14 @@ def mk_note(note, cosine_or_sine, duration, sample_rate):
         'C5': 523.25
     }
 
-    match cosine_or_sine:
-        case 'cosine':
-            audio = make_cosine(note_frequencies[note], duration, sample_rate, 0.5, 0)
-        case 'sine':
-            audio = make_sine(note_frequencies[note], duration, sample_rate, 0.5)
-        case _:
-            print("Unknown Wave Type")
+    if note not in note_frequencies:
+        print(f"Unknown note: {note}")
+        return None
+
+    frequency = note_frequencies[note]
+    amplitude = 0.5
+
+    audio = make_sine(frequency, duration, sample_rate, amplitude)
 
     return audio
 
@@ -91,13 +90,13 @@ def runtime(filename):
                     audio = make_cosine(frequency, duration, sample_rate, amplitude, phase)
                     playable_flow.append(audio)
                     print(playable_flow)
-                case 'auto_note':
-                    note = float(tokens[1])
+                case 'note':
+                    note = str(tokens[1])
                     duration = float(tokens[2])
-                    cosine_or_sine = float(tokens[3])
-                    sample_rate = float(tokens[4])
-                    audio = mk_note(note, duration, cosine_or_sine, sample_rate)
-                    playable_flow.append(audio)
+                    sample_rate = int(tokens[3])
+                    audio = mk_note(note, duration, sample_rate)
+                    if audio is not None:
+                        playable_flow.append(audio)
                 case 'play_flow':
                     play_flow(playable_flow, sample_rate)
                 case _: print("Unknown Keyword")
